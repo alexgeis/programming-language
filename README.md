@@ -22,3 +22,5 @@ do(define(x, 10),
         print("large"),
         print("small")))
 ```
+
+- the language has no concept of a block, so a `do` construct is required to represent doing multiple tasks in a sequence.
