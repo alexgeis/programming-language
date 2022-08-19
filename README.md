@@ -40,4 +40,27 @@ Finally, `apply` expressions represent applications. They have an `operator` pro
 Expressions have a recursive structure – application expressions contain other expressions. Thus, the parser is written to reflect this recursive nature.
 
 Function `parseExpression` takes a string as input and returns an object containing the data structure for the expression at the start of the string, along with the string remaining after parsing the expression.
+
 When parsing subexpressions, this function can be called again, yielding the argument expression as well as the text that remains (which may contain more arguments or the closing parentheses that ends the list of arguments).
+
+## Evaluator
+
+An evaluator is traditionally provided a syntax tree and a scope object that associates names with values. It then evaluates the expression that the syntax tree represents and returns the produced value.
+
+The evaluator contains logic for each expression type:
+
+- a literal value expression produces its value
+- for a binding, the function checks whether the expression is defined in the scope. If yes, it fetches the binding's value.
+- applications... (details below)
+
+### Application Evaluation
+
+Applications are more involved due to the breadth of potential scenarios.
+
+If they are a special form, like `if`, nothing is evaluated and arguments are passed, along with the scope, to the function handler for this form.
+If it's a normal call, we evaluate the operator, verify that it is a function, and call it with the evaluated arguments.
+Plain JavaScript function values represent this programming language's function values.
+
+### Special Forms
+
+the `specialForms` object is used to define special syntax in this programming language. It associates words with functions that evaluate such forms.
