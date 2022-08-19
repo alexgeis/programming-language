@@ -80,8 +80,32 @@ function parseApply(expr, program) {
 /**
  * @name parse
  * @description parses the provided expression and verifies it has reached the end of the input string
- * @param {object} expr
- * @param {string} program
+ * @param {string} program - a single expression containing program instructions
  *
  * @returns {object} returns the program's data structure
  */
+function parse(program) {
+	let { expr, rest } = parseExpression(program);
+	if (skipSpace(rest).length > 0) {
+		throw new SyntaxError("Unexpected text after program");
+	}
+	return expr;
+}
+console.log(parse("+(a, 10)"));
+// {
+//     type: "apply",
+//     operator: {
+//         type: "word",
+//         value: "+"
+//     },
+//     args: [
+//         {
+//         type: "word",
+//         value: "a"
+//         },
+//         {
+//         type: "value",
+//         value: 10
+//         }
+//     ]
+// }
